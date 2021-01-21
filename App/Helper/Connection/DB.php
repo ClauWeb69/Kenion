@@ -46,12 +46,6 @@ class DB
         return new self;
     }
     function delete(){
-        self::$column = $column;
-        $coln = "";
-        foreach ($column as $cl)
-            $coln .= $cl.",";
-
-        $coln = rtrim($coln, ",");
         self::$query = "DELETE FROM ".self::$table." ";
         return new self;
     }
