@@ -4,19 +4,17 @@ namespace Http\Controllers\Admin\Order;
 use Helper\Connection\DB;
 
 class Prova{
-    function autoload(){
-        DB::connect();
+    function autoload($suca){
 
         print_r(
-            DB::table("prova")
-            ->select(["*"])
-            ->where("word", 512)
+            DB::query("SELECT * FROM prova WHERE word=:suca")
+            ->bind(":suca", $suca)
             ->exec()
             ->getAll());
         //print_r(self::$conn->errorInfo());
         //self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        View("lol");
+        //View("lol");
     }
 }
 

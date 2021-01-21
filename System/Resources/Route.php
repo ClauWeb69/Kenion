@@ -42,9 +42,8 @@ class Route
             $method = $_SERVER['REQUEST_METHOD'];
 
         static $routes = [];
-
         if (!$func) {
-            $f = null;
+            $r = null;
             $n = '';
             $argv = [];
             foreach (explode('/', $route) as $arg) {
@@ -65,9 +64,9 @@ class Route
                     $argv = [];
                 }
             }
-
             if(!$r || (count($argv) < $r['mandatory']) || (count($argv) > $r['argc']))
                 exit(http_response_code(404));
+
             return call_user_func_array($r['func'], $argv);
         }
 
@@ -86,9 +85,6 @@ class Route
             $name .= '/';
         $name = strtolower($name);
         $routes[$method][$name] = ['func' => $func, 'argc' => $argc, 'mandatory' => $mandatory];
-
-
-
         return 0;
     }
     function run(){

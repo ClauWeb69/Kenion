@@ -27,6 +27,9 @@ class DB
     }
 
     function query($query){
+        if(!self::$link)
+            self::connect();
+
         self::$query = $query;
         self::$link = static::$conn->prepare($query);
         return new self;
@@ -38,6 +41,9 @@ class DB
         return new self;
     }
     function table($table){
+        if(!self::$link)
+            self::connect();
+
         self::$table = $table;
         return new self;
     }

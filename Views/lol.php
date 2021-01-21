@@ -1,6 +1,1 @@
-asdasdasdasdas
-d
-asd
-as
-d
-as
+ivan è gay
