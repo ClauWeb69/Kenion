@@ -14,6 +14,7 @@ class DB
 
     private static $select = null;
     private static $update = [];
+    private static $insert = [];
 
     private static $link = null;
     function connect($database = null){
@@ -41,10 +42,17 @@ class DB
         return new self;
     }
     function table($table){
-        if(!self::$link)
-            self::connect();
-
         self::$table = $table;
+        return new self;
+    }
+    function delete(){
+        self::$column = $column;
+        $coln = "";
+        foreach ($column as $cl)
+            $coln .= $cl.",";
+
+        $coln = rtrim($coln, ",");
+        self::$query = "DELETE FROM ".self::$table." ";
         return new self;
     }
     function select($column = []){
@@ -64,17 +72,38 @@ class DB
         foreach(self::$update as $k => $value){
             foreach($value as $key => $val) {
                 self::$bind[] = $val;
-                $index = end(array_keys(self::$bind));
+                $array = array_keys(self::$bind);
+                $index = end($array);
                 self::$query .= $key . " = :{$index},";
             }
         }
         self::$query = rtrim(self::$query, ",");
         return new self;
     }
+    function insert($value = []){
+        self::$insert = $value;
+        self::$query = "INSERT INTO ".self::$table." (";
+        foreach($value as $key => $v){
+            self::$query .= "{$key},";
+        }
+        self::$query = rtrim(self::$query, ",");
+        self::$query .= ") VALUES(";
+        foreach($value as $key => $v){
+            self::$bind[] = $v;
+            $array = array_keys(self::$bind);
+            $index = end($array);
+            self::$query .= ":{$index},";
+        }
+        self::$query = rtrim(self::$query, ",");
+        self::$query .= ")";
+        return new self;
+    }
     function where($key, $value, $or = false){
-        $index = end(array_keys(self::$bind))+1;
+        self::$bind[] = $value;
+        $array = array_keys(self::$bind);
+        $index = end($array);
         self::$where[$index][$key] = [$or => $value];
-        self::$bind[$index] = $value;
+
         return new self;
     }
     function last_id(){

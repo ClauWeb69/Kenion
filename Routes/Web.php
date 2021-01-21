@@ -2,7 +2,7 @@
 use Http\Controllers\Admin\Order\Prova as LOL;
 
 
-Route::get('/asd/?asd', [LOL::class, "autoload"]);
+Route::get('/asd', [LOL::class, "autoload"]);
 
 
 ?>
