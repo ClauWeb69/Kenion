@@ -126,12 +126,18 @@ class DB
             self::query(self::$query);
             if(count(self::$bind) > 0){
                 foreach(self::$bind as $k => &$b) {
-                    self::$link->bindParam(":".$k, $b);
+                    self::bind(":".$k, $b);
                 }
             }
         }
     }
     function getAll(){
         return self::$link->fetchAll(PDO::FETCH_ASSOC);
+    }
+    function get(){
+        return self::$link->fetch(PDO::FETCH_ASSOC);
+    }
+    function count(){
+        return count(self::$link->fetchAll(PDO::FETCH_ASSOC));
     }
 }
