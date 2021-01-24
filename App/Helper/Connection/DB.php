@@ -6,7 +6,6 @@ class DB
 {
     private static $conn = null;
     private static $table = null;
-    private static $column = [];
     private static $query = null;
     private static $binds = [];
     private static $where = [];
@@ -49,10 +48,10 @@ class DB
         self::$query = "DELETE FROM ".self::$table." ";
         return new self;
     }
-    function select($column = []){
-        self::$column = $column;
+    function select($select = []){
+        self::$select = $select;
         $coln = "";
-        foreach ($column as $cl)
+        foreach ($select as $cl)
             $coln .= $cl.",";
 
         $coln = rtrim($coln, ",");

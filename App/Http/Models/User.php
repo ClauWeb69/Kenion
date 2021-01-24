@@ -13,17 +13,20 @@ class User
     }
     function get($where = []){
         $link = DB::table("Users");
+        $link->select(["*"]);
         foreach ($where as $k => $b)
             $link->where($k, $b);
         return $link->exec()->get();
     }
     function current(){
         $link = DB::table("Users");
+        $link->select(["*"]);
         $link->where("id", self::id());
         return $link->exec()->get();
     }
     function getAll($where = []){
         $link =DB::table("Users");
+        $link->select(["*"]);
         foreach ($where as $k => $b)
             $link->where($k, $b);
         return $link->exec()->getAll();

@@ -15,7 +15,7 @@ class Csrf
         return $token === self::token() ? true : false;
     }
 
-    function names($names){
+    function names($names = []){
         if(session_status() !== PHP_SESSION_ACTIVE)
             return "Session isn't started";
         $changed = array();
